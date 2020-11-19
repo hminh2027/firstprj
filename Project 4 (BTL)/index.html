@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <!-- Link Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <!-- Link FontAwesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+  </head>
+  <body>
+        <div class="wrapper">
+          <div class="login-wrapper">
+            <form class="form" action="" method="post">
+            <div class="form__title">adminstrators</div>
+            <div class="form__input-wrapper">
+              <input id="user"class="form__input" type="text" placeholder="Username">
+            </div>
+            <div class="form__input-wrapper">
+              <input id="pass" class="form__input" type="password" placeholder="Password">
+              <div class="form__icon">
+                <i class="far fa-eye"></i>
+              </div>
+            </div>
+            <div class="form__submit-wrapper">
+              <button class="form__submit signin-btn" type="button" value="SIGNIN">signin</button>
+              <button class="form__submit login-btn" type="submit" value="LOGIN">login</button>
+            </div>
+          </form>
+          </div>
+          <div class="signin-wrapper white-bg">
+            <form class="form" action="" method="post">
+              <div class="form__title black">registration</div>
+              <div class="form__input-wrapper">
+                <input id="user2" class="form__input black border-bt-black" type="text" placeholder="Username" required>
+              </div>
+              <div class="form__input-wrapper">
+                <input id="pass2" class="form__input black border-bt-black" type="password" placeholder="Password" required>
+              </div>
+              <div class="form__input-wrapper">
+                <input id="passcf" class="form__input black border-bt-black" type="password" placeholder="Password confirm" required>
+              </div>
+              <div class="form__submit-wrapper">
+                <button id="sign" class="form__submit signin-btn white-bg black border-black" type="submit" value="SIGNIN">signin</button>
+              </div>
+            </form>
+            <div class="close-btn">
+              <i class="fas fa-times"></i>
+            </div>
+          </div>
+        </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- Link JS -->
+    <script src="./js/index.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="http://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script>
+     // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyA842TbT82ksCRXGce5JE_KoGTKHerpZho",
+        authDomain: "btl-web-9c0f2.firebaseapp.com",
+        databaseURL: "https://btl-web-9c0f2.firebaseio.com",
+        projectId: "btl-web-9c0f2",
+        storageBucket: "btl-web-9c0f2.appspot.com",
+        messagingSenderId: "225089947920",
+        appId: "1:225089947920:web:0025d4aa7d09413845bd95"
+      };
+      // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        var database = firebase.database();
+        //Get Data
+        var dbRef = firebase.database().ref().child('student');
+        var admins = [];
+        var passs = [];
+        var count=0;
+        dbRef.on('value',snap => {
+          snap.forEach(e => {
+            var temp1 = e.val().username;
+            var temp2 = e.val().password;
+            admins.push(temp1);
+            passs.push(temp2);
+            count++;
+          })
+        });
+        // Auth
+        $('.login-btn').click(function (e) { 
+        e.preventDefault();
+        var user = document.querySelector('#user').value;
+        var pass = document.querySelector('#pass').value;
+        if(isEmpty(user) == false && isEmpty(pass)==false) {
+          for (let i = 0; i < count; i++) {
+            if(user == admins[i] && pass == passs[i]){
+              if(user == "hoangminh" && pass == "111111"){
+               swal("Success!", "You're accessing as Hoang Minh!", "success");
+               window.location= "https://hoangminh2027.000webhostapp.com/"
+              }
+              else {
+                swal("Success!", "You're accessing as an admin!", "success");
+                window.location= "customer.html";
+                return 0;
+              }
+            }
+          } 
+          swal("Hmm!", "Wrong username or password...", "error");     
+        }
+        else if(user=="" && pass==""){
+            swal("Opps!", "Please fill the empty blank!", "warning");
+        }
+        else if(user=="" && isEmpty(pass) == false){
+            swal("Opps!", "Username please?", "error");
+        }
+        else if(pass=="" && isEmpty(user) == false){
+            swal("Opps!", "Password please?", "error");
+        }
+    });
+    //Check string
+    function isEmpty(str){
+        return (!str || 0 === str.length);
+    }
+    //Regis
+    $('#sign').click((e)=>{
+      e.preventDefault();
+      var user2 = document.querySelector('#user2').value;
+      var pass2 = document.querySelector('#pass2').value;
+      var passcf = document.querySelector('#passcf').value;
+      if(pass2 != passcf){
+        swal("Opps!", "Please reconfirm your password!", "warning");
+      } 
+      else if(user2=="" && pass2==""){
+        swal("Opps!", "Please fill the empty blank!", "warning");
+      }
+      else if(user2=="" && isEmpty(pass2) == false){
+        swal("Opps!", "Username please?", "error");
+      }
+      else if(pass2=="" && isEmpty(user2) == false){
+        swal("Opps!", "Password please?", "error");
+      }
+      else if (checkAdmin(user2) == 0){
+        swal("Opps!", "This Username has been taken!", "warning");
+      }
+      else if(!checkRegex(user2,userRegex)){
+        swal("Opps!", "Username must have at least 4 character!", "warning");
+      }
+      else if(!checkRegex(pass2,pwRegex)){
+        swal("Opps!", "Password must have at least 6 character! First letter must be capital!", "warning");
+      }
+      else {
+        firebase.database().ref('student').push({
+        username: user2,
+        password: pass2
+      });
+      swal("Hooray!", "Now you have a account", "success");
+      }
+    });
+    //Check admin
+    function checkAdmin(user){
+      for (let i = 0; i < admins.length; i++) {
+        if(admins[i] == user){
+          return 0
+        }
+        return 1;
+      }
+    }
+    //RegEx
+    let userRegex= /^[a-z]+[a-z0-9]{3,}/;
+    let pwRegex = /^[A-Z]+[a-z0-9]{5,}/;
+    function checkRegex(value,regex){
+      return regex.test(value);
+    }
+    </script>
+  </body>
+</html>

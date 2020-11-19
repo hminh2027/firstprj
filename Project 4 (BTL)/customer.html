@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Link CSS -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <!-- Link Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <!-- Link FontAwesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="header">
+      <div class="header__home">
+        <div class="header__logo">
+          <i class="fas fa-user-circle"></i>
+        Employee manager
+        </div>
+      </div>
+      <div class="header__nav">
+        <ul class="header__list-item">
+          <li class="header__item"><a href="#">nhân viên</a></li>
+          <li class="header__item"><a href="#">điểm danh</a></li>
+          <li class="header__item"><a href="#">tiền lương</a></li>
+          <li class="header__item"><a href="#">báo cáo</a></li>
+          <li class="header__item"><a href="#">sự kiện</a></li>
+          <li class="header__item"><a href="#"><i class="fas fa-caret-down"></i></a></li>
+        </ul>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+      <div class="container-fluid search">
+        <div class="search__text">Search for employee:</div>
+        <input onkeyup="searchData()" class="search__search-bar" type="text" placeholder="Type name of the employee you need to find...">
+      </div>
+      <br>
+      <div class="container-fluid function">
+        <div class="function__text">main function:</div>
+        <br>
+        <ul class="function__list-item">
+          <li class="function__item"><button onclick="addRow()" class="function__btn" type="button"><i class="fas fa-user-plus"></i></button></li>
+          <li class="function__item"><button class="function__btn" type="button"><i class="fas fa-filter"></i></button></li>
+          <li class="function__item"><button class="function__btn" type="button"><i class="fas fa-print"></i></button></li>
+          <li class="function__item"><button class="function__btn" type="button"><i class="fas fa-cogs"></i></button></li>
+        </ul>
+      </div>
+      <br>
+      <div class="container-fluid table-wrapper">
+        <table id="myTable" class="table">
+          <thead>
+            <tr>
+              <th onclick="setDataIndex()">Tên Nhân Viên</th>
+              <th>Giới Tính</th>
+              <th>Ngày Sinh</th>
+              <th>Chức Vụ</th>
+              <th>Tính Năng</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+      <div class="footer">
+        <div class="contact__wrapper">
+          <ul class="contact__list-item">
+            <li class="contact__item"><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+            <li class="contact__item"><a href="#"><i class="fab fa-github"></i></a></li>
+            <li class="contact__item"><a href="#"><i class="fab fa-instagram"></i></a></li>
+            <li class="contact__item"><a href="#"><i class="fab fa-youtube"></i></a></li>
+          </ul>
+          <div class="contact__text">
+            code and design by me
+          </div>
+        </div>
+      </div>
+    <!-- Optional JavaScript-->
+    <script src="./js/index.js"></script>
+    <script src="http://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+     // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyA842TbT82ksCRXGce5JE_KoGTKHerpZho",
+        authDomain: "btl-web-9c0f2.firebaseapp.com",
+        databaseURL: "https://btl-web-9c0f2.firebaseio.com",
+        projectId: "btl-web-9c0f2",
+        storageBucket: "btl-web-9c0f2.appspot.com",
+        messagingSenderId: "225089947920",
+        appId: "1:225089947920:web:0025d4aa7d09413845bd95"
+      };
+      // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        var database = firebase.database();
+        var databaseInfo = firebase.database().ref('infor');
+    </script>
+    <script>
+      //Print table
+        databaseInfo.on('value',snap => {
+          snap.forEach(e => {
+            var tr = '<tr data-index="'+e.key+'">' + '<td scope="row">'+toCapitalize(e.val().name)+'</td>'+ '<td>'+ toCapitalize(e.val().gender) + '</td>' + '<td>'+ e.val().birth + '</td>' + '<td>'+ toCapitalize(e.val().job) + '</td>'+'<td>'+'<i class="fas fa-edit"></i>'+ '<i class="far fa-trash-alt"></i>' +'</td>' +'</tr>';
+            $('tbody').append(tr);
+          })
+        });
+      //Search engine
+        function searchData () {
+          var text = document.querySelector('.search__search-bar').value;
+          var table = document.getElementById("myTable");
+          var tr = table.getElementsByTagName("tr");
+          for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(text.toUpperCase()) ==0) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+        //Add
+        function addRow(){
+          let tr = '<tr id="addInput">' + '<td scope="row">'+'<input type="text" placeholder="Điền tên">'+'</td>'+'<td>'+'<input type="text" placeholder="Điền giới tính">'+'</td>'+ '<td>'+'<input type="date" placeholder="Điền ngày sinh">'+'</td>'+ '<td>'+'<input type="text" placeholder="Điền chức vụ">'+'</td>'+ '<td>' + '<i class="far fa-save"></i>'+ '<i class="far fa-trash-alt"></i>'+ '</td>' +'</tr>';
+          $('tbody').append(tr);
+          $('.fa-user-plus').parent().attr('disabled',0);
+          $('.fa-user-plus').parent().addClass('disabled-btn');
+        }
+        //Edit    
+        $(document).on("click", ".fa-edit", function () {
+          var arr = [];
+          $(this).toggleClass('fa-save','fa-edit');
+          var id = $(this).parents("tr").attr('data-index');
+          databaseInfo.on('value',snap => {
+            snap.forEach(e => {
+              if (e.key == id){
+                arr.push(e.val());
+              }
+            })
+          });
+          //
+          $(this).parents("tr").html('<td>'+'<input type="text" value="' + arr[0].name + '">'+'</td>'+ '<td>'+'<input type="text" value="' + arr[0].gender + '">'+'</td>'+ '<td>'+'<input type="date" value="' + arr[0].birth + '">'+'</td>' + '<td>'+'<input type="text" value="' + arr[0].job + '">'+'</td>' + '<td>' +'<i class="far fa-save"></i>'+ '<i class="far fa-trash-alt"></i>'+ '</td>');
+        });
+        //Save
+        $(document).on('click','.fa-save',function (){
+          var dataArr = [];
+          $(this).parents("tr").find("td:not(:last-child)").find("input").each(function () {
+            console.log($(this).value);
+            if (this.value == "") {
+              swal("Nope!", "Have you fill all the blank?", "error");
+            }
+            else {
+              dataArr.push(this.value);
+            } 
+          });
+          var id = $(this).parents("tr").attr('data-index');
+          if (id) {
+            databaseInfo.on('value',snap => {
+            snap.forEach(e => {
+              if(e.key == id){
+                database.ref('infor/'+id).set({
+                  name: dataArr[0],
+                  gender: dataArr[1],
+                  birth: dataArr[2],
+                  job : dataArr[3]
+                });
+                swal("Whoo!", "You've update an employee", "success");
+                setTimeout(()=>{
+                  location.reload();
+                },600);
+              }
+            });
+          });
+          }
+          else {
+            databaseInfo.push({
+              name: dataArr[0],
+              gender: dataArr[1],
+              birth: dataArr[2],
+              job : dataArr[3]
+            });
+            swal("Whoo!", "You've add an employee", "success");
+            setTimeout(()=>{
+              location.reload();
+            },600);
+          }
+        });
+        //Delete
+        $(document).on('click','.fa-trash-alt',function(){
+          if ($(this).parents('tr').attr('id')) {
+            $(this).parents('tr').remove();
+            $('.fa-user-plus').parent().removeAttr('disabled');
+            $('.fa-user-plus').parent().removeClass('disabled-btn');
+          }
+          else {
+            var idDel = $(this).parents('tr').attr('data-index');
+            database.ref('infor/'+ idDel).remove();
+            swal("Well!", "You've just delete someone!", "success");
+            setTimeout(()=>{
+              location.reload();
+            },600);
+          }
+        });
+        //
+
+    </script>
+    <script>
+      function toCapitalize(s) {
+        return s.charAt(0).toUpperCase() + s.slice(1);
+      }
+      function isEmpty(str){
+        return (!str || 0 === str.length);
+      }
+    </script>
+</body>
+</html>
